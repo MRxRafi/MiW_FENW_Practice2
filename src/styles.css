@@ -1,1 +1,56 @@
-/* You can add global styles to this file, and also import other style files */
+fieldset.prefForm {
+  border: 1px groove #ddd;
+  padding: 0 1.4em 1.4em 1.4em;
+  margin: 0 0 1.5em 0;
+  -webkit-box-shadow:  0px 0px 0px 0px #000;
+  box-shadow:  0px 0px 0px 0px #000;
+}
+
+legend.prefForm {
+  font-size: 1.2em;
+  font-weight: bold;
+  text-align: left;
+  width:inherit; /* Or auto */
+  padding:0 10px; /* To give a bit of padding on the left and right */
+  border-bottom:none;
+}
+
+main {
+  margin: 3em;
+}
+
+span.nav-link:hover, span.nav-link-active:hover{
+  cursor: pointer;
+}
+
+
+.wrapper {
+  margin-right: 3em;
+}
+
+.logos {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.infoPanel {
+  margin: 2em;
+  margin-top: 0;
+  margin-right: 4em;
+  padding: 1em;
+  border: 1px solid black;
+  background: #828282;
+}
+
+.cardContainer {
+  background: #c3c3c3;
+  margin-bottom: 2em;
+}
+
+.card {
+  margin: 1em;
+  width: 125px;
+  height: 180px;
+}
