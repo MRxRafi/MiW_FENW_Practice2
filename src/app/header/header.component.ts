@@ -1,15 +1,18 @@
-import { Component, OnInit } from '@angular/core';
+import {Component} from '@angular/core';
+import { NgClass } from '@angular/common';
 
 @Component({
   selector: 'app-header',
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.css']
 })
-export class HeaderComponent implements OnInit {
-
+export class HeaderComponent {
+  activeLink = [true, false, false, false, false, false];
+  lastActiveLink = 0;
   constructor() { }
-
-  ngOnInit(): void {
+  changeHeader(clickedHeader): void {
+    this.activeLink[this.lastActiveLink] = false;
+    this.activeLink[clickedHeader] = true;
+    this.lastActiveLink = clickedHeader;
   }
-
 }

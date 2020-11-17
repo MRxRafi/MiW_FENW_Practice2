@@ -10,21 +10,21 @@
 
     <div class="collapse navbar-collapse" id="collapsibleNavId">
       <ul class="navbar-nav mr-auto">
-        <li id="inicio" routerLink="inicio" class="nav-item">
-          <span class="nav-link active">Inicio <i class="fas fa-home"></i></span></li>
-        <li id="preferences" routerLink="preferencias" class="nav-item">
-          <span class="nav-link">Preferencias <i class="fas fa-cogs"></i></span></li>
-        <li id="play" routerLink="jugar" class="nav-item">
-          <span class="nav-link">Jugar <i class="fas fa-play"></i></span></li>
-        <li id="records" routerLink="puntuaciones" class="nav-item">
-          <span class="nav-link">Records <i class="fas fa-circle-notch"></i></span></li>
+        <li id="inicio" routerLink="inicio" class="nav-item" (click)="changeHeader(0)">
+          <span [ngClass]="{ 'nav-link': true, 'active': activeLink[0]}">Inicio <i class="fas fa-home"></i></span></li>
+        <li id="preferences" routerLink="preferencias" class="nav-item" (click)="changeHeader(1)">
+          <span [ngClass]="{ 'nav-link': true, 'active': activeLink[1]}">Preferencias <i class="fas fa-cogs"></i></span></li>
+        <li id="play" routerLink="jugar" class="nav-item" (click)="changeHeader(2)">
+          <span [ngClass]="{ 'nav-link': true, 'active': activeLink[2]}">Jugar <i class="fas fa-play"></i></span></li>
+        <li id="records" routerLink="puntuaciones" class="nav-item" (click)="changeHeader(3)">
+          <span [ngClass]="{ 'nav-link': true, 'active': activeLink[3]}">Records <i class="fas fa-circle-notch"></i></span></li>
       </ul>
       <ul class="nav navbar-nav navbar-right wrapper">
-        <li id="register" routerLink="registro" class="nav-item">
-          <span class="nav-link"><i class="fas fa-user"></i> Registro</span>
+        <li id="register" routerLink="registro" class="nav-item" (click)="changeHeader(4)">
+          <span [ngClass]="{ 'nav-link': true, 'active': activeLink[4]}"><i class="fas fa-user"></i> Registro</span>
         </li>
-        <li id="login" routerLink="login" class="nav-item">
-          <span class="nav-link"><i class="fas fa-sign-in-alt"></i> Login</span>
+        <li id="login" routerLink="login" class="nav-item" (click)="changeHeader(5)">
+          <span [ngClass]="{ 'nav-link': true, 'active': activeLink[5]}"><i class="fas fa-sign-in-alt"></i> Login</span>
         </li>
       </ul>
     </div>
