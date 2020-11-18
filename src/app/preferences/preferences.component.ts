@@ -16,8 +16,8 @@ export class PreferencesComponent {
               private prfService: PreferencesService) { }
 
   preferencesSubmitted(evt): void {
-    const newImgNumber = $('#imgNumber').val() as number;
-    const newMaxTime = $('#maxTime').val() as number;
+    const newImgNumber = parseInt($('#imgNumber').val() as string, 10);
+    const newMaxTime = parseInt($('#maxTime').val() as string, 10);
     this.prfService.updatePreferences(newImgNumber, newMaxTime);
     evt.preventDefault();
     this.router.navigate(['/jugar']);

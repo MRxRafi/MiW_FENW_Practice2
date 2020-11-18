@@ -13,11 +13,22 @@ export class PlayComponent implements OnInit {
   score = 0;
   totalScore = 0;
   gameFinished = false;
-  time = this.prfService.maxTime;
+  time: number = this.prfService.maxTime;
+  idTemporizador: number;
   constructor(private prfService: PreferencesService) {
+    this.initGame();
+  }
+
+  ngOnInit(): void {
+  }
+
+  checkCards(): void {
+  }
+
+  private initGame(): void {
     const longitudArray = this.CARDS_NAMES.length;
     this.gameCardsName = [];
-    for (let i = 0; i < prfService.imgNumber / 2; i++) {
+    for (let i = 0; i < this.prfService.imgNumber / 2; i++) {
       if (i < longitudArray) {
         this.gameCardsName.push(this.CARDS_NAMES[i]);
         this.gameCardsName.push(this.CARDS_NAMES[i]);
@@ -27,12 +38,20 @@ export class PlayComponent implements OnInit {
       }
     }
     this.shuffle(this.gameCardsName);
+    if (this.time !== 0) {
+      console.log(this.time);
+      this.idTemporizador = setInterval(() => this.decrementTime(), 1000);
+    }
   }
 
-  ngOnInit(): void {
-  }
-
-  checkCards(): void {
+  private decrementTime(): void {
+    if (this.time > 0) {
+      this.time--;
+    }
+    if (this.time <= 0) {
+      this.gameFinished = true;
+      clearInterval(this.idTemporizador);
+    }
   }
 
   private shuffle(a): string[] {
