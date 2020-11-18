@@ -12,6 +12,7 @@ import { ScoresComponent } from './scores/scores.component';
 import { SignupComponent } from './signup/signup.component';
 
 import { PreferencesService } from './shared/preferences.service';
+import { CardComponent } from './play/card/card.component';
 
 @NgModule({
   declarations: [
@@ -22,7 +23,8 @@ import { PreferencesService } from './shared/preferences.service';
     PlayComponent,
     PreferencesComponent,
     ScoresComponent,
-    SignupComponent
+    SignupComponent,
+    CardComponent
   ],
   imports: [
     BrowserModule,

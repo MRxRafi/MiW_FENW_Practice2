@@ -1,18 +1,19 @@
 <article class="d-flex flex-direction-row">
-  <div class="">
+  <div>
     <div class="infoPanel">
       <p>Puntuación</p>
-      <p id="score">0</p>
+      <p>{{score}}</p>
       <p>Tiempo</p>
-      <p id="time">0</p>
+      <p>{{time}}</p>
     </div>
     <div class="infoPanel">
       <p>Total</p>
-      <p id="totalPoints">0</p>
+      <p>{{totalScore}}</p>
     </div>
   </div>
   <div class="container cardContainer">
-    <div id="cards_container" class="d-flex align-items-center flex-row flex-wrap">
+    <div id="cards_container" class="d-flex align-items-center flex-row flex-wrap" (click)="checkCards()">
+      <app-card *ngFor="let cardname of gameCardsName" [cardName]="cardname" [gameFinished]="gameFinished"></app-card>
     </div>
   </div>
 </article>
