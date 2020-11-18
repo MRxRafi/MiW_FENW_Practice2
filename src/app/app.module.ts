@@ -11,6 +11,8 @@ import { PreferencesComponent } from './preferences/preferences.component';
 import { ScoresComponent } from './scores/scores.component';
 import { SignupComponent } from './signup/signup.component';
 
+import { PreferencesService } from './shared/preferences.service';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -26,7 +28,7 @@ import { SignupComponent } from './signup/signup.component';
     BrowserModule,
     AppRoutingModule
   ],
-  providers: [],
+  providers: [PreferencesService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

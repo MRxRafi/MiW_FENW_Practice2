@@ -1,15 +1,25 @@
-import { Component, OnInit } from '@angular/core';
+import {Component} from '@angular/core';
+import {PreferencesService} from '../shared/preferences.service';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-preferences',
   templateUrl: './preferences.component.html',
   styleUrls: ['./preferences.component.css']
 })
-export class PreferencesComponent implements OnInit {
+export class PreferencesComponent {
+  MIN_IMG_NUMBER = 20;
+  MIN_TIME = 0;
+  MAX_IMG_NUMBER = 32;
+  MAX_TIME = 150;
+  constructor(private router: Router,
+              private prfService: PreferencesService) { }
 
-  constructor() { }
-
-  ngOnInit(): void {
+  preferencesSubmitted(evt): void {
+    const newImgNumber = $('#imgNumber').val() as number;
+    const newMaxTime = $('#maxTime').val() as number;
+    this.prfService.updatePreferences(newImgNumber, newMaxTime);
+    evt.preventDefault();
+    this.router.navigate(['/jugar']);
   }
-
 }
