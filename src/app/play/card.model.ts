@@ -1,5 +1,5 @@
 export interface CardModel {
-  // id: string;
+  id: number;
   cardName: string;
   src: string;
   shown: boolean;
