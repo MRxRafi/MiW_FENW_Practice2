@@ -1,4 +1,5 @@
 import { BrowserModule } from '@angular/platform-browser';
+import { HttpClientModule } from '@angular/common/http';
 import { NgModule } from '@angular/core';
 
 import { AppRoutingModule } from './app-routing.module';
@@ -12,6 +13,8 @@ import { ScoresComponent } from './scores/scores.component';
 import { SignupComponent } from './signup/signup.component';
 
 import { PreferencesService } from './shared/preferences.service';
+import { HttpService } from './shared/http.service';
+import { FromEpochPipe } from './pipes/from-epoch.pipe';
 
 @NgModule({
   declarations: [
@@ -22,13 +25,18 @@ import { PreferencesService } from './shared/preferences.service';
     PlayComponent,
     PreferencesComponent,
     ScoresComponent,
-    SignupComponent
+    SignupComponent,
+    FromEpochPipe
   ],
   imports: [
     BrowserModule,
+    HttpClientModule,
     AppRoutingModule
   ],
-  providers: [PreferencesService],
+  providers: [
+    PreferencesService,
+    HttpService
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
