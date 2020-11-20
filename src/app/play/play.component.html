@@ -2,13 +2,14 @@
   <div>
     <div class="infoPanel">
       <p>Puntuación</p>
-      <p>{{score}}</p>
+      <p>{{scorePanel.score}}</p>
       <p>Tiempo</p>
-      <p>{{time}}</p>
+      <p>{{scorePanel.time}}</p>
     </div>
     <div class="infoPanel">
       <p>Total</p>
-      <p>{{totalScore}}</p>
+      <p>{{scorePanel.totalScore}}</p>
+      <button type="submit" class="btn btn-primary" (click)="saveScore()" [hidden]="scorePanel.saveHidden">Save</button>
     </div>
   </div>
   <div class="container cardContainer">

@@ -1,6 +1,7 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { HttpClientModule } from '@angular/common/http';
 import { NgModule } from '@angular/core';
+import { FormsModule } from '@angular/forms';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -14,6 +15,7 @@ import { SignupComponent } from './signup/signup.component';
 
 import { PreferencesService } from './shared/preferences.service';
 import { HttpService } from './shared/http.service';
+import { UserService } from './shared/user.service';
 import { FromEpochPipe } from './pipes/from-epoch.pipe';
 
 @NgModule({
@@ -31,11 +33,13 @@ import { FromEpochPipe } from './pipes/from-epoch.pipe';
   imports: [
     BrowserModule,
     HttpClientModule,
-    AppRoutingModule
+    AppRoutingModule,
+    FormsModule
   ],
   providers: [
     PreferencesService,
-    HttpService
+    HttpService,
+    UserService
   ],
   bootstrap: [AppComponent]
 })

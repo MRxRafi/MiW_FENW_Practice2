@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import {PreferencesService} from '../shared/preferences.service';
 import {CardModel} from './card.model';
+import {ScorePanelModel} from './score-panel.model';
 
 @Component({
   selector: 'app-play',
@@ -13,29 +14,11 @@ export class PlayComponent {
   IMG_FOLDER = '../../assets/naipes/';
   IMG_CARD_BACK = 'reverso.jpg';
   gameCards: CardModel[];
-  score = 0;
-  totalScore = 0;
-  time: number = this.prfService.maxTime;
+  scorePanel: ScorePanelModel;
   gameFinished = false;
-  idTemporizador: number;
   constructor(private prfService: PreferencesService) {
     this.initGame();
   }
-
-  private initGame(): void {
-    this.gameCards = [];
-    const numberOfCards = this.prfService.imgNumber;
-    const gameCardsName = this.generateRandomCardsNames(numberOfCards);
-    for (let i = 0; i < numberOfCards; i++) {
-      const card = this.createCard(i, gameCardsName[i], this.IMG_FOLDER + this.IMG_CARD_BACK);
-      this.gameCards.push(card);
-    }
-    if (this.time !== 0) {
-      console.log(this.time);
-      this.idTemporizador = setInterval(() => this.decrementTime(), 1000);
-    }
-  }
-
   checkCards(card: CardModel): void {
     this.flip(card);
     const revealedCards = [];
@@ -47,12 +30,12 @@ export class PlayComponent {
 
     if (revealedCards.length === 2) {
       if (revealedCards[0].cardName === revealedCards[1].cardName) {
-        this.score += 15;
+        this.scorePanel.score += 15;
         revealedCards[0].matched = true;
         revealedCards[1].matched = true;
         this.checkFinished();
       } else {
-        this.score -= 5;
+        this.scorePanel.score -= 5;
         setTimeout(() => {
           this.flip(revealedCards[0]);
           this.flip(revealedCards[1]);
@@ -60,22 +43,46 @@ export class PlayComponent {
       }
     }
   }
+  saveScore(): void {
+    // TODO Salvar puntuación en BBDD, que aparezca un mensaje debajo diciendo Puntuacion salvada y deshabilitar botón
+  }
+  private initGame(): void {
+    this.gameCards = [];
+    const numberOfCards = this.prfService.imgNumber;
+    const gameCardsName = this.generateRandomCardsNames(numberOfCards);
+    const time = this.prfService.maxTime;
+    let idTimer: number;
+    for (let i = 0; i < numberOfCards; i++) {
+      const card = this.createCard(i, gameCardsName[i], this.IMG_FOLDER + this.IMG_CARD_BACK);
+      this.gameCards.push(card);
+    }
+    if (this.prfService.maxTime !== 0) {
+      idTimer = setInterval(() => this.decrementTime(), 1000);
+    }
+    this.scorePanel = {
+      score: 0,
+      totalScore: 0,
+      time,
+      idTimer,
+      saveHidden: true
+    };
+  }
   private checkFinished(): void {
     let numberOfMatched = 0;
     for (let i = 0, max = this.gameCards.length; i < max; i++) {
       if (this.gameCards[i].matched) { numberOfMatched++; }
     }
     if (numberOfMatched === this.gameCards.length) {
-      // this.reset(); TEMPORIZADOR
-      this.gameFinished = true;
       const maxTime = this.prfService.maxTime;
-      if (this.gameCards.length === 26) { this.score += 25; }
-      if (this.gameCards.length === 32) { this.score += 50; }
-      if (maxTime === 30) { this.score += 150; }
-      if (maxTime === 60) { this.score += 100; }
-      if (maxTime === 90) { this.score += 75; }
-      if (maxTime === 120) { this.score += 50; }
-      if (maxTime === 150) { this.score += 25; }
+      if (this.gameCards.length === 26) { this.scorePanel.score += 25; }
+      if (this.gameCards.length === 32) { this.scorePanel.score += 50; }
+      if (maxTime === 30) { this.scorePanel.score += 150; }
+      if (maxTime === 60) { this.scorePanel.score += 100; }
+      if (maxTime === 90) { this.scorePanel.score += 75; }
+      if (maxTime === 120) { this.scorePanel.score += 50; }
+      if (maxTime === 150) { this.scorePanel.score += 25; }
+      this.scorePanel.totalScore = this.scorePanel.score;
+      this.finishGame();
     }
   }
   private generateRandomCardsNames(numberOfCards): string[] {
@@ -112,13 +119,20 @@ export class PlayComponent {
     }
   }
   private decrementTime(): void {
-    if (this.time > 0) {
-      this.time--;
+    if (this.scorePanel.time > 0) {
+      this.scorePanel.time--;
     }
-    if (this.time <= 0) {
-      this.gameFinished = true;
-      clearInterval(this.idTemporizador);
+    if (this.scorePanel.time <= 0) {
+      this.finishGame();
     }
+  }
+  private finishGame(): void {
+    if (this.scorePanel.idTimer !== undefined) {
+      clearInterval(this.scorePanel.idTimer);
+    }
+    // TODO que solo aparezca si el usuario está logged
+    this.scorePanel.saveHidden = false;
+    this.gameFinished = true;
   }
   private shuffle(a): string[] {
     for (let i = a.length - 1; i > 0; i--) {

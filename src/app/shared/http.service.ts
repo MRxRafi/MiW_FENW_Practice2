@@ -11,4 +11,7 @@ export class HttpService {
   public getScores(): Observable<any> {
     return this.http.get(this.baseUrl + '/records');
   }
+  public login(username: string, password: string): Observable<any> {
+    return this.http.get(this.baseUrl + '/users/login?username=' + username + '&password=' + password);
+  }
 }
