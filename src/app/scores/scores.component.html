@@ -1,7 +1,7 @@
 <article class="jumbotron">
   <div class="container">
     <fieldset class="prefForm">
-      <legend class="prefForm">Score</legend>
+      <legend class="prefForm">ScoreModel</legend>
       <table class="table">
         <thead>
         <tr>
@@ -14,16 +14,14 @@
         </tr>
         </thead>
         <tbody id="tBodyScore">
-        <!--
-        <tr>
-          <th scope="row">1</th>
-          <td>Prueba1</td>
-          <td>0</td>
-          <td>100</td>
-          <td>0</td>
-          <td>09/11/2020</td>
-        </tr>
-        -->
+          <tr *ngFor="let score of scores; let i = index">
+            <th scope="row">{{i+1}}</th>
+            <td>{{score.username}}</td>
+            <td>{{score.punctuation}}</td>
+            <td>{{score.cards}}</td>
+            <td>{{score.disposedTime}}</td>
+            <td>{{score.recordDate | fromEpoch}}</td>
+          </tr>
         </tbody>
       </table>
     </fieldset>

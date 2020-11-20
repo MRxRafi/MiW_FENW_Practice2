@@ -12,8 +12,10 @@
     </div>
   </div>
   <div class="container cardContainer">
-    <div id="cards_container" class="d-flex align-items-center flex-row flex-wrap" (click)="checkCards()">
-      <app-card *ngFor="let cardname of gameCardsName" [cardName]="cardname" [gameFinished]="gameFinished"></app-card>
+    <div id="cards_container" class="d-flex align-items-center flex-row flex-wrap">
+      <ng-container *ngFor="let card of gameCards">
+        <img [src]="card.src" class="rounded card" (click)="checkCards(card)">
+      </ng-container>
     </div>
   </div>
 </article>

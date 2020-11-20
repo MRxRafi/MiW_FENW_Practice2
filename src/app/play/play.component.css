@@ -11,3 +11,9 @@
   border: 1px solid black;
   background: #828282;
 }
+
+.card {
+  margin: 1em;
+  width: 125px;
+  height: 180px;
+}
