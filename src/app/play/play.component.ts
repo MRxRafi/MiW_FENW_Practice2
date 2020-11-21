@@ -1,14 +1,15 @@
-import { Component } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {PreferencesService} from '../shared/preferences.service';
 import {CardModel} from './card.model';
 import {ScorePanelModel} from './score-panel.model';
+import {UserService} from "../shared/user.service";
 
 @Component({
   selector: 'app-play',
   templateUrl: './play.component.html',
   styleUrls: ['./play.component.css']
 })
-export class PlayComponent {
+export class PlayComponent implements OnInit {
   CARDS_NAMES = ['bastos1.jpg', 'bastos12.jpg', 'copas1.jpg', 'copas12.jpg',
     'espadas1.jpg', 'espadas12.jpg', 'oros1.jpg', 'oros12.jpg'];
   IMG_FOLDER = '../../assets/naipes/';
@@ -16,8 +17,15 @@ export class PlayComponent {
   gameCards: CardModel[];
   scorePanel: ScorePanelModel;
   gameFinished = false;
-  constructor(private prfService: PreferencesService) {
+  temporalToken: string;
+  constructor(private prfService: PreferencesService,
+              private userService: UserService) {
     this.initGame();
+  }
+  ngOnInit(): void {
+    this.userService.tokenSubject$.asObservable().subscribe((token) => {
+      this.temporalToken = token;
+    });
   }
   checkCards(card: CardModel): void {
     this.flip(card);

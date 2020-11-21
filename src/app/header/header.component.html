@@ -20,11 +20,14 @@
           <span [ngClass]="{ 'nav-link': true, 'active': activeLink[3]}">Records <i class="fas fa-circle-notch"></i></span></li>
       </ul>
       <ul class="nav navbar-nav navbar-right wrapper">
-        <li id="register" routerLink="registro" class="nav-item" (click)="changeHeader(4)">
+        <li *ngIf="!userLogged" id="register" routerLink="registro" class="nav-item" (click)="changeHeader(4)">
           <span [ngClass]="{ 'nav-link': true, 'active': activeLink[4]}"><i class="fas fa-user"></i> Registro</span>
         </li>
-        <li id="login" routerLink="login" class="nav-item" (click)="changeHeader(5)">
+        <li *ngIf="!userLogged" id="login" routerLink="login" class="nav-item" (click)="changeHeader(5)">
           <span [ngClass]="{ 'nav-link': true, 'active': activeLink[5]}"><i class="fas fa-sign-in-alt"></i> Login</span>
+        </li>
+        <li *ngIf="userLogged" id="logout" routerLink="inicio" class="nav-item" (click)="logOut()">
+          <span [ngClass]="{ 'nav-link': true }"><i class="fas fa-sign-out-alt"></i> Log out</span>
         </li>
       </ul>
     </div>

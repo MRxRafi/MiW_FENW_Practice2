@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {HttpService} from '../shared/http.service';
 import {Router} from '@angular/router';
-import {UserService} from "../shared/user.service";
+import {UserService} from '../shared/user.service';
 
 @Component({
   selector: 'app-login',
@@ -21,9 +21,8 @@ export class LoginComponent implements OnInit {
     event.preventDefault();
     this.httpService.login(this.username, this.password).subscribe((response) => {
       if (response.headers === undefined) {
-        this.userService.token = response;
+        this.userService.generateToken(response);
         this.userService.username = this.username;
-        // TODO Cambiar header con observador
         this.router.navigate(['/inicio']);
       }
     });

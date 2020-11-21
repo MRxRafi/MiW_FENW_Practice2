@@ -1,7 +1,7 @@
 export interface ScoreModel {
-  username: string;
+  username?: string;
   punctuation: number;
   cards: number;
   disposedTime: number;
-  recordDate: number;
+  recordDate?: number;
 }
