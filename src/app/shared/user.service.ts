@@ -22,6 +22,9 @@ export class UserService {
   getToken(): string {
     return this.token;
   }
+  getUserRecords(): Observable<any> {
+    return this.httpService.getUserScores(this.token, this.username);
+  }
   saveRecord(score: ScoreModel): Observable<any> {
     return this.httpService.saveRecord(this.token, score);
   }

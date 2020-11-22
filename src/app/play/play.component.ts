@@ -100,7 +100,7 @@ export class PlayComponent {
       if (maxTime === 60) { this.scorePanel.score += 100; }
       if (maxTime === 90) { this.scorePanel.score += 75; }
       if (maxTime === 120) { this.scorePanel.score += 50; }
-      if (maxTime === 150) { this.scorePanel.score += 225; }
+      if (maxTime === 150) { this.scorePanel.score += 25; }
       this.scorePanel.totalScore = this.scorePanel.score;
       this.finishGame();
     }

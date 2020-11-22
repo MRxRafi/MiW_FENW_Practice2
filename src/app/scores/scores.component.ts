@@ -18,13 +18,17 @@ export class ScoresComponent implements OnInit {
     this.httpService.getScores().subscribe(
       (scores: ScoreModel[]) => {
         this.scores = scores;
-        const username = this.userService.username;
-        if (username !== undefined) {
-          for (const score of scores) {
-            if (score.username === username) { this.personalScores.push(score); }
-          }
-        }
       });
+    this.userService.getUserRecords().subscribe(response => {
+      this.userService.generateToken(response.headers.get('Authorization'));
+      const username = this.userService.username;
+      const userScores: ScoreModel[] = response.body;
+      if (username !== undefined) {
+        for (const score of userScores) {
+          if (score.username === username) { this.personalScores.push(score); }
+        }
+      }
+    }, error => {  });
   }
   deletePersonalScores(): void {
     this.userService.deletePersonalRecords();

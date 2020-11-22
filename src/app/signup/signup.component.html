@@ -6,28 +6,38 @@
         <div class="form-group row">
           <label class="col-sm-2 col-form-label" for="user">Usuario: </label>
           <div class="col-sm-10">
-            <input id="user" type="text" name="user" placeholder="Identificador de usuario">
+            <input id="user" type="text" name="user" placeholder="Identificador de usuario"
+                   [(ngModel)]="username" (focusout)="checkUsernameExists()">
+            <div [hidden]="!usernameExists" class="alert alert-danger" role="alert">
+              El nombre indicado ya existe en la base de datos
+            </div>
           </div>
         </div>
         <div class="form-group row">
           <label class="col-sm-2 col-form-label" for="email">Correo: </label>
           <div class="col-sm-10">
-            <input id="email" type="text" name="email" placeholder="Email">
+            <input id="email" type="text" name="email" placeholder="Email" [(ngModel)]="email">
           </div>
         </div>
         <div class="form-group row">
           <label class="col-sm-2 col-form-label" for="password">Clave: </label>
           <div class="col-sm-10">
-            <input id="password" type="password" name="password" placeholder="Clave">
+            <input id="password" type="password" name="password" placeholder="Clave" [(ngModel)]="password">
           </div>
         </div>
         <div class="form-group row">
           <label class="col-sm-2 col-form-label" for="repeat_password">Repita la clave: </label>
           <div class="col-sm-10">
-            <input id="repeat_password" type="password" name="repeat_password" placeholder="Repita la clave">
+            <input id="repeat_password" type="password" name="repeat_password" placeholder="Repita la clave" [(ngModel)]="repeatPassword">
           </div>
         </div>
-        <button id="submitButton" type="submit" class="btn btn-primary">Enviar</button>
+        <div [hidden]="fieldsOk" class="alert alert-danger" role="alert">
+          Corrija el/los campo/s incorrectos antes de continuar
+        </div>
+        <button id="submitButton" type="submit" class="btn btn-primary" (click)="submitSignup($event)">Enviar</button>
+        <div [hidden]="!signedUp" class="alert alert-success" role="alert">
+          Usuario registrado correctamente.
+        </div>
       </fieldset>
     </form>
   </div>
