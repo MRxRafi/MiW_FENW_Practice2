@@ -1,7 +1,7 @@
 <article class="jumbotron">
-  <div class="container">
+  <div class="d-flex flex-row justify-content-around">
     <fieldset class="prefForm">
-      <legend class="prefForm">Scores</legend>
+      <legend class="prefForm">Records generales</legend>
       <table class="table">
         <thead>
         <tr>
@@ -22,6 +22,31 @@
             <td>{{score.disposedTime}}</td>
             <td>{{score.recordDate | fromEpoch}}</td>
           </tr>
+        </tbody>
+      </table>
+    </fieldset>
+    <fieldset *ngIf="personalScores.length !== 0" class="prefForm">
+      <legend class="prefForm">Records del usuario <i class="far fa-trash-alt" (click)="deletePersonalScores()"></i></legend>
+      <table class="table">
+        <thead>
+        <tr>
+          <th scope="col"></th>
+          <th scope="col">Usuario</th>
+          <th scope="col">Ptos.</th>
+          <th scope="col">Cartas</th>
+          <th scope="col">Segs</th>
+          <th scope="col">Fecha</th>
+        </tr>
+        </thead>
+        <tbody id="tBodyPersonalScore">
+        <tr *ngFor="let score of personalScores; let i = index">
+          <th scope="row">{{i+1}}</th>
+          <td>{{score.username}}</td>
+          <td>{{score.punctuation}}</td>
+          <td>{{score.cards}}</td>
+          <td>{{score.disposedTime}}</td>
+          <td>{{score.recordDate | fromEpoch}}</td>
+        </tr>
         </tbody>
       </table>
     </fieldset>

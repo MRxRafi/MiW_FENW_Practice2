@@ -9,7 +9,14 @@
     <div class="infoPanel">
       <p>Total</p>
       <p>{{scorePanel.totalScore}}</p>
-      <button type="submit" class="btn btn-primary" (click)="saveScore()" [hidden]="scorePanel.saveHidden">Save</button>
+      <button type="submit" class="btn btn-primary"
+              (click)="saveScore()" [hidden]="scorePanel.saveHidden" [disabled]="savedScoreMessage || errorScoreMessage">Save</button>
+    </div>
+    <div *ngIf="savedScoreMessage" class="alert alert-success" role="alert">
+      Puntuación guardada en la base de datos correctamente.
+    </div>
+    <div *ngIf="errorScoreMessage" class="alert alert-danger" role="alert">
+      Error guardando la puntuación
     </div>
   </div>
   <div class="container cardContainer">

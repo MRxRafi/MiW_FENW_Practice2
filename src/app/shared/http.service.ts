@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import {HttpClient} from '@angular/common/http';
+import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {Observable} from 'rxjs';
 import {ScoreModel} from '../scores/score.model';
 
@@ -16,7 +16,15 @@ export class HttpService {
     return this.http.get(this.baseUrl + '/users/login?username=' + username + '&password=' + password);
   }
   public saveRecord(token: string, score: ScoreModel): Observable<any> {
-    // TODO Falta enviar token en la cabecera
-    return this.http.post(this.baseUrl + '/records', JSON.stringify(score));
+    const headers = new HttpHeaders()
+      .set('Content-Type', 'application/json')
+      .set('Authorization', token);
+    return this.http.post(this.baseUrl + '/records/', JSON.stringify(score), { headers, observe: 'response' });
+  }
+  public deletePersonalRecords(token: string): Observable<any> {
+    const headers = new HttpHeaders()
+      .set('Content-Type', 'application/json')
+      .set('Authorization', token);
+    return this.http.delete(this.baseUrl + '/records', { headers });
   }
 }

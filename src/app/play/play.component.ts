@@ -2,30 +2,27 @@ import {Component, OnInit} from '@angular/core';
 import {PreferencesService} from '../shared/preferences.service';
 import {CardModel} from './card.model';
 import {ScorePanelModel} from './score-panel.model';
-import {UserService} from "../shared/user.service";
+import {UserService} from '../shared/user.service';
+import {ScoreModel} from '../scores/score.model';
 
 @Component({
   selector: 'app-play',
   templateUrl: './play.component.html',
   styleUrls: ['./play.component.css']
 })
-export class PlayComponent implements OnInit {
+export class PlayComponent {
   CARDS_NAMES = ['bastos1.jpg', 'bastos12.jpg', 'copas1.jpg', 'copas12.jpg',
     'espadas1.jpg', 'espadas12.jpg', 'oros1.jpg', 'oros12.jpg'];
   IMG_FOLDER = '../../assets/naipes/';
   IMG_CARD_BACK = 'reverso.jpg';
   gameCards: CardModel[];
   scorePanel: ScorePanelModel;
+  savedScoreMessage = false;
+  errorScoreMessage = false;
   gameFinished = false;
-  temporalToken: string;
   constructor(private prfService: PreferencesService,
               private userService: UserService) {
     this.initGame();
-  }
-  ngOnInit(): void {
-    this.userService.tokenSubject$.asObservable().subscribe((token) => {
-      this.temporalToken = token;
-    });
   }
   checkCards(card: CardModel): void {
     this.flip(card);
@@ -52,7 +49,22 @@ export class PlayComponent implements OnInit {
     }
   }
   saveScore(): void {
-    // TODO Salvar puntuación en BBDD, que aparezca un mensaje debajo diciendo Puntuacion salvada y deshabilitar botón
+    const record: ScoreModel = {
+      punctuation: this.scorePanel.totalScore,
+      cards: this.gameCards.length,
+      disposedTime: this.prfService.maxTime
+    };
+    this.userService.saveRecord(record)
+      .subscribe((response) => {
+        const newToken = response.headers.get('Authorization');
+        if (newToken !== undefined) {
+          this.userService.generateToken(newToken);
+          this.savedScoreMessage = true;
+        } else {
+          this.errorScoreMessage = true;
+        }
+      });
+    this.savedScoreMessage = true;
   }
   private initGame(): void {
     this.gameCards = [];
@@ -88,7 +100,7 @@ export class PlayComponent implements OnInit {
       if (maxTime === 60) { this.scorePanel.score += 100; }
       if (maxTime === 90) { this.scorePanel.score += 75; }
       if (maxTime === 120) { this.scorePanel.score += 50; }
-      if (maxTime === 150) { this.scorePanel.score += 25; }
+      if (maxTime === 150) { this.scorePanel.score += 225; }
       this.scorePanel.totalScore = this.scorePanel.score;
       this.finishGame();
     }
@@ -138,8 +150,9 @@ export class PlayComponent implements OnInit {
     if (this.scorePanel.idTimer !== undefined) {
       clearInterval(this.scorePanel.idTimer);
     }
-    // TODO que solo aparezca si el usuario está logged
-    this.scorePanel.saveHidden = false;
+    if (this.userService.getToken() !== undefined) {
+      this.scorePanel.saveHidden = false;
+    }
     this.gameFinished = true;
   }
   private shuffle(a): string[] {

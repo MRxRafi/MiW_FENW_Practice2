@@ -12,6 +12,14 @@
   background: #828282;
 }
 
+.alert {
+  margin: 2em;
+  margin-top: 0;
+  margin-right: 4em;
+  padding: 1em;
+  border: 1px solid green;
+}
+
 .card {
   margin: 1em;
   width: 125px;
