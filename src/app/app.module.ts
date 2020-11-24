@@ -17,6 +17,7 @@ import { PreferencesService } from './shared/preferences.service';
 import { HttpService } from './shared/http.service';
 import { UserService } from './shared/user.service';
 import { FromEpochPipe } from './pipes/from-epoch.pipe';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 @NgModule({
   declarations: [
@@ -34,7 +35,8 @@ import { FromEpochPipe } from './pipes/from-epoch.pipe';
     BrowserModule,
     HttpClientModule,
     AppRoutingModule,
-    FormsModule
+    FormsModule,
+    BrowserAnimationsModule
   ],
   providers: [
     PreferencesService,
