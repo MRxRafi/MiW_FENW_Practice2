@@ -4,16 +4,28 @@
       <fieldset class="prefForm">
         <legend class="prefForm">Identificación de usuario</legend>
         <div class="form-group row">
-          <label class="col-sm-2 col-form-label" for="user">Usuario: </label>
           <div class="col-sm-10">
-            <input id="user" type="text" name="user" placeholder="Identificador de usuario" [(ngModel)]="username">
+            <mat-form-field appearance="fill">
+              <mat-label>Introduzca un nombre de usuario</mat-label>
+              <input matInput placeholder="Cuachifu" [formControl]="username" required>
+              <mat-error *ngIf="username.invalid">Debe rellenar el nombre de usuario</mat-error>
+            </mat-form-field>
           </div>
         </div>
         <div class="form-group row">
-          <label class="col-sm-2 col-form-label" for="password">Clave: </label>
           <div class="col-sm-10">
-            <input id="password" type="password" name="password" placeholder="Clave" [(ngModel)]="password">
+            <mat-form-field appearance="fill">
+              <mat-label>Introduzca una contraseña</mat-label>
+              <input matInput [type]="hidePassword ? 'password' : 'text'" [formControl]="password">
+              <button mat-icon-button matSuffix (click)="hidePassword = !hidePassword" [attr.aria-label]="'Esconder contraseña'" [attr.aria-pressed]="hidePassword">
+                <mat-icon>{{hidePassword ? 'visibility_off' : 'visibility'}}</mat-icon>
+              </button>
+              <mat-error *ngIf="password.invalid">Debe rellenar la contraseña</mat-error>
+            </mat-form-field>
           </div>
+        </div>
+        <div [hidden]="fieldsOk" class="alert alert-danger" role="alert">
+          {{ textoError }}
         </div>
         <button id="submitButton" type="submit" class="btn btn-primary" (click)="login($event)">Enviar</button>
       </fieldset>
